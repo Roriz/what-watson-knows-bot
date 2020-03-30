@@ -1,0 +1,10 @@
+{
+	"telegram": {
+		"name": "whatWatsonKnowsBot",
+		"token": "secret",
+		"file_path": "https://api.telegram.org/file/bot"
+	},
+	"i18n": {
+		"folder": "i18n"
+	}
+}
