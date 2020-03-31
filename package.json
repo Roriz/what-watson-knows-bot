@@ -27,6 +27,7 @@
     "dotenv": "^8.2.0",
     "i18n": "^0.8.6",
     "ibm-watson": "^5.4.0",
+    "lodash": "^4.17.15",
     "node-telegram-bot-api": "^0.40.0"
   },
   "engines": {
