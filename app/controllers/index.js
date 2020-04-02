@@ -12,6 +12,7 @@ module.exports = (bot) => {
 
     Ok, but what I do? For now you can use the services:
     - Tone Analyzer: use with \`/tone Product sales have been disappointing for the past three quarters.\`
+    - Text to Speech: use with \`/text_to_speech Product sales\`
     `);
   });
 };
