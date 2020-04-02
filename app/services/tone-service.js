@@ -1,13 +1,14 @@
 const ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
 const sortBy = require('lodash/sortBy');
-const iamAuthenticator = require('./iam-authenticator-service');
+const compact = require('lodash/compact');
+const { IamAuthenticator } = require('ibm-watson/auth');
 
 module.exports = class ToneService {
   constructor(text) {
     this.text = text;
     this.result = '';
     this.toneAnalyzer = new ToneAnalyzerV3({
-      authenticator: iamAuthenticator,
+      authenticator: new IamAuthenticator({ apikey: process.env.IBM_TONE_ANALYSER_TOKEN }),
       version: '2016-05-19',
       url: 'https://gateway.watsonplatform.net/tone-analyzer/api/',
     });
@@ -26,10 +27,12 @@ module.exports = class ToneService {
   }
 
   get validCategories() {
-    return this.result.map((category) => ({
+    const results = this.result.map((category) => ({
       label: category.category_name,
-      value: sortBy(category.tones.filter((t) => t.score > 0.5), 'score').reverse()[0],
-    })).filter((c) => c.value);
+      value: sortBy(category.tones, 'score').reverse()[0],
+    }));
+
+    return compact(results);
   }
 
   get formattedCategories() {
