@@ -1,5 +1,6 @@
 const ToneService = require('../services/tone-service');
 
+let serviceLimit = parseInt(process.env.IBM_TONE_ANALYSER_TOKEN_LIMIT, 10) || Infinity;
 
 module.exports = (bot) => {
   bot.onText(/\/tone$/, (msg) => {
@@ -7,9 +8,18 @@ module.exports = (bot) => {
   });
 
   bot.onText(/\/tone (.+)/, async (msg, match) => {
+    if (serviceLimit <= 0) {
+      return bot.sendMessage(
+        msg.chat.id,
+        'Sorry this bot reach the limit, try maybe in another day',
+      );
+    }
+
     const message = await new ToneService(match[1]).call();
 
-    await bot.sendMessage(
+    serviceLimit -= 1;
+
+    return bot.sendMessage(
       msg.chat.id,
       message,
       { parse_mode: 'HTML' },

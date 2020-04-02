@@ -4,5 +4,5 @@ This is a telegram bot to demonstrate ibm watson capacities with a easy interfac
 
 ## Features
 
-### Image recognition
-Send a image on chat will response with count of faces, gender of each face and age of each face
+## Tone Analyzer
+## Text to Speech
