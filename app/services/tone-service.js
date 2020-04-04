@@ -16,7 +16,7 @@ module.exports = class ToneService {
 
   async call() {
     await this.requestTone();
-    return `Watson think this tone is:\n${this.formattedCategories}`;
+    return this.validCategories;
   }
 
   async requestTone() {
@@ -33,14 +33,5 @@ module.exports = class ToneService {
     }));
 
     return compact(results);
-  }
-
-  get formattedCategories() {
-    if (this.validCategories.length) {
-      return this.validCategories
-        .map((r) => `<b>${r.label}</b>: ${r.value.tone_name}\n`)
-        .join('');
-    }
-    return 'nothing :/';
   }
 };

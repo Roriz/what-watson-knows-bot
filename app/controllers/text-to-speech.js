@@ -1,6 +1,6 @@
 const TextToSpeechService = require('../services/text-to-speech-service');
 
-let serviceLimit = parseInt(process.env.IBM_TONE_ANALYSER_TEXT_TO_SPEECH_LIMIT, 10) || Infinity;
+let serviceLimit = parseInt(process.env.IBM_TEXT_TO_SPEECH_LIMIT, 10) || Infinity;
 
 module.exports = (bot) => {
   bot.onText(/\/text_to_speech$/, (msg) => {
@@ -19,9 +19,6 @@ module.exports = (bot) => {
 
     serviceLimit -= match[1].length;
 
-    return bot.sendVoice(
-      msg.chat.id,
-      file,
-    );
+    return bot.sendVoice(msg.chat.id, file);
   });
 };

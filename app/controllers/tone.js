@@ -15,7 +15,13 @@ module.exports = (bot) => {
       );
     }
 
-    const message = await new ToneService(match[1]).call();
+    const categories = await new ToneService(match[1]).call();
+
+    const formattedCategories = categories
+      .map((r) => `<b>${r.label}</b>: ${r.value.tone_name}\n`)
+      .join('');
+
+    const message = `Watson think this tone is:\n${formattedCategories}`;
 
     serviceLimit -= 1;
 

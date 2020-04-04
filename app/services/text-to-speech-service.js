@@ -5,7 +5,7 @@ module.exports = class TextToSpeechService {
   constructor(text) {
     this.text = text;
     this.textToSpeech = new TextToSpeechV1({
-      authenticator: new IamAuthenticator({ apikey: process.env.IBM_TONE_ANALYSER_TEXT_TO_SPEECH }),
+      authenticator: new IamAuthenticator({ apikey: process.env.IBM_TEXT_TO_SPEECH }),
       url: 'https://stream.watsonplatform.net/text-to-speech/api/',
     });
   }
