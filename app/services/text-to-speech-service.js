@@ -1,26 +1,17 @@
 const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
-module.exports = class TextToSpeechService {
-  constructor(text) {
-    this.text = text;
-    this.textToSpeech = new TextToSpeechV1({
-      authenticator: new IamAuthenticator({ apikey: process.env.IBM_TEXT_TO_SPEECH }),
-      url: 'https://stream.watsonplatform.net/text-to-speech/api/',
-    });
-  }
+const textToSpeech = new TextToSpeechV1({
+  authenticator: new IamAuthenticator({ apikey: process.env.IBM_TEXT_TO_SPEECH }),
+  url: 'https://stream.watsonplatform.net/text-to-speech/api/',
+});
 
-  call() {
-    return this.requestAudio();
-  }
+module.exports = async function TextToSpeechService(text) {
+  const audio = await textToSpeech.synthesize({
+    text,
+    // voice: 'pt-BR_IsabelaV3Voice',
+    accept: 'audio/wav',
+  });
 
-  async requestAudio() {
-    const audio = await this.textToSpeech.synthesize({
-      text: this.text,
-      // voice: 'pt-BR_IsabelaV3Voice',
-      accept: 'audio/wav',
-    });
-
-    return this.textToSpeech.repairWavHeaderStream(audio.result);
-  }
+  return textToSpeech.repairWavHeaderStream(audio.result);
 };
