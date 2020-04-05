@@ -10,6 +10,7 @@ module.exports = async function SpeechToTextService(audio, mimeType) {
   const response = await speechToText.recognize({
     audio,
     contentType: mimeType,
+    // model: 'pt-BR_NarrowbandModel',
   });
 
   return response.result.results[0].alternatives;
