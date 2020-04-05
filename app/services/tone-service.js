@@ -9,12 +9,12 @@ const toneAnalyzer = new ToneAnalyzerV3({
 });
 
 module.exports = async function ToneService(text) {
-  const response = await toneAnalyzer.tone({
+  const { result } = await toneAnalyzer.tone({
     toneInput: text,
     contentType: 'text/plain',
   });
 
-  return response.document_tone.tone_categories.map((category) => ({
+  return result.document_tone.tone_categories.map((category) => ({
     label: category.category_name,
     value: sortBy(category.tones, 'score').reverse()[0],
   }));

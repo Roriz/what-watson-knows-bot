@@ -1,19 +1,12 @@
 const visualRecognitionService = require('../services/visual-recognition-service');
+const ServiceReachLimit = require('../errors/service-reach-limit');
 
 let serviceLimit = parseInt(process.env.IBM_VISUAL_RECOGNITION_LIMIT, 10) || Infinity;
 
-global.bot.on('message', async (msg) => {
-  if (!msg.photo) { return; }
+module.exports = async function visualRecognition(telegramParams) {
+  if (serviceLimit <= 0) { throw new ServiceReachLimit('visualRecognition'); }
 
-  if (serviceLimit <= 0) {
-    global.bot.sendMessage(
-      msg.chat.id,
-      'Sorry this bot reach the limit, try maybe in another day',
-    );
-    return;
-  }
-
-  const file = msg.photo[msg.photo.length - 1];
+  const file = telegramParams.photo[telegramParams.photo.length - 1];
 
   const photo = global.bot.getFileStream(file.file_id);
 
@@ -23,9 +16,9 @@ global.bot.on('message', async (msg) => {
 
   serviceLimit -= 1;
 
-  global.bot.sendMessage(
-    msg.chat.id,
+  await global.bot.sendMessage(
+    telegramParams.chat.id,
     `This image problably have:\n${formattedClasses}`,
     { parse_mode: 'HTML' },
   );
-});
+};

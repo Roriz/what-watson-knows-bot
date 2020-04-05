@@ -1,11 +1,6 @@
-require('./tone');
-require('./text-to-speech');
-require('./visual-recognition');
-require('./speech-to-text');
-
-global.bot.onText(/\/(start|help)$/, (msg) => {
+module.exports = function start(telegramParams) {
   global.bot.sendMessage(
-    msg.chat.id,
+    telegramParams.chat.id,
     `Hi! I'm <b>watson bot</b>, my objetive is demonstrate some watson features with easy way.
       But remember this is a side-project and maybe can reach the limit of requests.
 
@@ -16,4 +11,4 @@ global.bot.onText(/\/(start|help)$/, (msg) => {
       - <b>Speech to Text</b> to use send me a audio`,
     { parse_mode: 'HTML' },
   );
-});
+};
