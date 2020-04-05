@@ -4,7 +4,7 @@ const ServiceReachLimit = require('../errors/service-reach-limit');
 let serviceLimit = parseInt(process.env.IBM_TEXT_TO_SPEECH_LIMIT, 10) || Infinity;
 
 module.exports = async function textToSpeech(telegramParams) {
-  if (serviceLimit <= 0) { throw new ServiceReachLimit('textToSpeech'); }
+  if (serviceLimit <= 0) { throw new ServiceReachLimit('text to speech service'); }
 
   const [, clientMessage] = telegramParams.text.match(/\/[\w_]+\s?(.*)?/);
 

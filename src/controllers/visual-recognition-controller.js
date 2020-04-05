@@ -4,7 +4,7 @@ const ServiceReachLimit = require('../errors/service-reach-limit');
 let serviceLimit = parseInt(process.env.IBM_VISUAL_RECOGNITION_LIMIT, 10) || Infinity;
 
 module.exports = async function visualRecognition(telegramParams) {
-  if (serviceLimit <= 0) { throw new ServiceReachLimit('visualRecognition'); }
+  if (serviceLimit <= 0) { throw new ServiceReachLimit('visual recognition service'); }
 
   const file = telegramParams.photo[telegramParams.photo.length - 1];
 
@@ -12,7 +12,7 @@ module.exports = async function visualRecognition(telegramParams) {
 
   const classes = await visualRecognitionService(photo);
 
-  const formattedClasses = classes.map((c) => `<b>${c.class}</b>(${parseInt(c.score * 100, 10)}%)`).join('\n');
+  const formattedClasses = classes.map((c) => `<b>${c.class}</b> (${parseInt(c.score * 100, 10)}%)`).join('\n');
 
   serviceLimit -= 1;
 

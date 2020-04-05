@@ -1,22 +1,20 @@
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
-const routers = require('./routers');
+const router = require('./router');
 
-// replace the value below with the Telegram token you receive from @BotFather
 const token = process.env.TELEGRAM_BOT_TOKEN;
 
-// Create a bot that uses 'polling' to fetch new updates
 global.bot = new TelegramBot(token, { polling: true });
 
 global.bot.on('message', async (telegramParams) => {
   const start = new Date();
 
-  await routers(telegramParams);
+  await router(telegramParams);
 
   const executionTime = new Date() - start;
 
   console.info(
-    'Message has been sended and was responded in %dms',
+    `Reponse to: #${telegramParams.chat.id} (${telegramParams.chat.type}) in %dms`,
     executionTime,
   );
 });
