@@ -1,6 +1,7 @@
 require('./tone');
 require('./text-to-speech');
 require('./visual-recognition');
+require('./speech-to-text');
 
 global.bot.onText(/\/(start|help)$/, (msg) => {
   global.bot.sendMessage(
@@ -11,7 +12,8 @@ global.bot.onText(/\/(start|help)$/, (msg) => {
       Ok, but what I do? For now you can use the services:
       - <b>Tone Analyzer</b> to use send me something like: \`/tone Product sales have been disappointing for the past three quarters.\`
       - <b>Text to Speech</b> to use send me something like: \`/text_to_speech Product sales\`
-      - <b>Visual Recognition</b> to use send me a photo`,
+      - <b>Visual Recognition</b> to use send me a photo
+      - <b>Speech to Text</b> to use send me a audio`,
     { parse_mode: 'HTML' },
   );
 });
